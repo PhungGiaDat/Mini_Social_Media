@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, Image, FlatList, TouchableOpacity } from 'react-native';
-
+import favicon from '../../assets/favicon.png';
 // Danh sách user story mẫu
 const stories = [
   { id: 1, name: 'User1', image: require('../../assets/favicon.png') },
@@ -52,7 +52,7 @@ const HomeScreen = () => {
         </View>
 
         {/* Post Image */}
-        <Image source={require('../../assets/favicon.jpg')} style={styles.postImage} />
+        <Image source={require('../../assets/favicon.png')} style={styles.postImage} />
 
         {/* Post Caption */}
         <View style={styles.postCaption}>

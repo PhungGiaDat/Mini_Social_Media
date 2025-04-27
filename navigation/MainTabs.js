@@ -5,12 +5,11 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 // Import các màn hình
-import HomeScreen from './HomeScreen';
-import SearchScreen from './SearchScreen';
-import AddPostScreen from './AddPostScreen';
-import NotificationScreen from './NotificationScreen';
-import ProfileScreen from './ProfileScreen';
-
+import HomeScreen from '../screens/Home/HomeScreen';
+import SearchScreen from '../screens/Search/SearchScreen';
+import AddPostScreen from '../screens/Post/CreatePostScreen';
+import NotificationScreen from '../screens/Home/NotificationScreen'; // Nếu NotificationScreen không tồn tại, hãy kiểm tra lại
+import ProfileScreen from '../screens/Profile/ProfileScreen';
 // Khởi tạo Bottom Tab Navigator
 const Tab = createBottomTabNavigator();
 

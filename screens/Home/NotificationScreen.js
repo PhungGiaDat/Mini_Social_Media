@@ -1,10 +1,10 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
-const CreatePostScreen = () => {
+const NotificationScreen = () => {
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Create Post Screen</Text>
+      <Text style={styles.text}>Notification Screen</Text>
     </View>
   );
 };
@@ -21,4 +21,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CreatePostScreen;// Tạo bài viết
+export default NotificationScreen;
