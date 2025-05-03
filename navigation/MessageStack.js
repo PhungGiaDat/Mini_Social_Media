@@ -9,7 +9,7 @@ export default function MessageStack() {
   return (
     <Stack.Navigator>
       <Stack.Screen name="MessageList" component={MessageListScreen} />
-      <Stack.Screen name="Chat" component={ChatScreen} />
+      <Stack.Screen name="ChatRoom" component={ChatScreen} />
     </Stack.Navigator>
   );
 }

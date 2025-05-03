@@ -10,6 +10,7 @@ import SearchScreen from '../screens/Search/SearchScreen';
 import AddPostScreen from '../screens/Post/CreatePostScreen';
 import NotificationScreen from '../screens/Home/NotificationScreen'; // Nếu NotificationScreen không tồn tại, hãy kiểm tra lại
 import ProfileScreen from '../screens/Profile/ProfileScreen';
+import MessageStack from './MessageStack';
 // Khởi tạo Bottom Tab Navigator
 const Tab = createBottomTabNavigator();
 
@@ -49,6 +50,7 @@ const MainTabs = () => {
       <Tab.Screen name="AddPost" component={AddPostScreen} />
       <Tab.Screen name="Notifications" component={NotificationScreen} />
       <Tab.Screen name="Profile" component={ProfileScreen} />
+      <Tab.Screen name="Messages" component={MessageStack} />
     </Tab.Navigator>
   );
 };
