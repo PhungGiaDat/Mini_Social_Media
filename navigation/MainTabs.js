@@ -1,4 +1,9 @@
+// =========================
 // MainTabs.js
+// Điều hướng tab chính cho ứng dụng mạng xã hội.
+// - Quản lý các tab: Home, Search, AddPost, Notifications, Profile, Messages, Settings...
+// - Có thể mở rộng thêm tab mới hoặc tuỳ chỉnh icon/tab bar.
+// =========================
 
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -7,10 +12,11 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 // Import các màn hình
 import HomeScreen from '../screens/Home/HomeScreen';
 import SearchScreen from '../screens/Search/SearchScreen';
-import AddPostScreen from '../screens/Post/CreatePostScreen';
+import PostStack from './PostStack';
 import NotificationScreen from '../screens/Home/NotificationScreen'; // Nếu NotificationScreen không tồn tại, hãy kiểm tra lại
-import ProfileScreen from '../screens/Profile/ProfileScreen';
+import ProfileStack from './ProfileStack';
 import MessageStack from './MessageStack';
+import SettingScreen from '../screens/SettingScreen';
 // Khởi tạo Bottom Tab Navigator
 const Tab = createBottomTabNavigator();
 
@@ -34,6 +40,10 @@ const MainTabs = () => {
             iconName = focused ? 'notifications' : 'notifications-outline';
           } else if (route.name === 'Profile') {
             iconName = focused ? 'person' : 'person-outline';
+          } else if (route.name === 'Messages') {
+            iconName = focused ? 'chatbubble' : 'chatbubble-outline';
+          } else if (route.name === 'Settings') {
+            iconName = focused ? 'settings' : 'settings-outline';
           }
 
           // Trả về icon tương ứng
@@ -47,10 +57,11 @@ const MainTabs = () => {
       {/* Các tab screen */}
       <Tab.Screen name="Home" component={HomeScreen} />
       <Tab.Screen name="Search" component={SearchScreen} />
-      <Tab.Screen name="AddPost" component={AddPostScreen} />
+      <Tab.Screen name="AddPost" component={PostStack} />
       <Tab.Screen name="Notifications" component={NotificationScreen} />
-      <Tab.Screen name="Profile" component={ProfileScreen} />
+      <Tab.Screen name="Profile" component={ProfileStack} />
       <Tab.Screen name="Messages" component={MessageStack} />
+      <Tab.Screen name="Settings" component={SettingScreen} />
     </Tab.Navigator>
   );
 };

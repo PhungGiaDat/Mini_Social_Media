@@ -1,3 +1,11 @@
+// =========================
+// LoginScreen.js
+// Màn hình đăng nhập cho ứng dụng mạng xã hội.
+// - Cho phép người dùng nhập email và mật khẩu để đăng nhập.
+// - Điều hướng sang RegisterScreen, ForgetPasswordScreen nếu cần.
+// - Khi đăng nhập thành công, gọi hàm login từ AuthContext để chuyển sang giao diện chính.
+// =========================
+
 import React, { useState } from 'react';
 import {
   View,
@@ -10,9 +18,11 @@ import {
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { useTheme } from '../../contexts/ThemeContext';
 
 const LoginScreen = () => {
   const navigation = useNavigation();
+  const { colors } = useTheme();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -24,7 +34,7 @@ const LoginScreen = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: colors.background }] }>
       {/* Background và logo có thể tuỳ chỉnh thêm */}
       <View style={styles.header}>
         <Image
@@ -33,27 +43,29 @@ const LoginScreen = () => {
         />
       </View>
 
-      <Text style={styles.title}>Login</Text>
+      <Text style={[styles.title, { color: colors.text }]}>Login</Text>
 
-      <View style={styles.inputContainer}>
-        <Icon name="mail-outline" size={18} color="#fbbf24" />
+      <View style={[styles.inputContainer, { borderColor: colors.primary }] }>
+        <Icon name="mail-outline" size={18} color={colors.secondary} />
         <TextInput
           placeholder="Email"
-          style={styles.input}
+          style={[styles.input, { color: colors.text }]}
           value={email}
           onChangeText={setEmail}
           keyboardType="email-address"
+          placeholderTextColor={colors.secondary}
         />
       </View>
 
-      <View style={styles.inputContainer}>
-        <Icon name="lock-closed-outline" size={18} color="#fbbf24" />
+      <View style={[styles.inputContainer, { borderColor: colors.primary }] }>
+        <Icon name="lock-closed-outline" size={18} color={colors.secondary} />
         <TextInput
           placeholder="Password"
-          style={styles.input}
+          style={[styles.input, { color: colors.text }]}
           value={password}
           onChangeText={setPassword}
           secureTextEntry={!showPassword}
+          placeholderTextColor={colors.secondary}
         />
         <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
           <Icon
@@ -67,21 +79,21 @@ const LoginScreen = () => {
       {/* Ghi nhớ và quên mật khẩu */}
       <View style={styles.row}>
         <View style={styles.checkboxContainer}>
-          <Text style={styles.remember}>Remember me</Text>
+          <Text style={[styles.remember, { color: colors.text }]}>Remember me</Text>
         </View>
         <TouchableOpacity>
-          <Text style={styles.forgot}>Forgot password?</Text>
+          <Text style={[styles.forgot, { color: colors.text }]}>Forgot password?</Text>
         </TouchableOpacity>
       </View>
 
-      <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
-        <Text style={styles.loginText}>LOGIN</Text>
+      <TouchableOpacity style={[styles.loginButton, { backgroundColor: colors.secondary }]} onPress={handleLogin}>
+        <Text style={[styles.loginText, { color: colors.text }]}>LOGIN</Text>
       </TouchableOpacity>
 
       <View style={styles.registerRow}>
-        <Text>Don't have an account? </Text>
+        <Text style={{ color: colors.text }}>Don't have an account? </Text>
         <Pressable onPress={() => navigation.navigate('Register')}>
-          <Text style={styles.registerLink}>Sign Up</Text>
+          <Text style={[styles.registerLink, { color: colors.secondary }]}>Sign Up</Text>
         </Pressable>
       </View>
     </View>
@@ -93,7 +105,6 @@ export default LoginScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff9ec',
     padding: 20,
     justifyContent: 'center',
   },
@@ -110,12 +121,10 @@ const styles = StyleSheet.create({
     fontSize: 32,
     fontWeight: 'bold',
     marginBottom: 40,
-    color: '#000',
   },
   inputContainer: {
     flexDirection: 'row',
     borderBottomWidth: 1,
-    borderColor: '#ccc',
     alignItems: 'center',
     paddingVertical: 8,
     gap: 8,
@@ -136,14 +145,11 @@ const styles = StyleSheet.create({
   },
   remember: {
     fontSize: 12,
-    color: '#333',
   },
   forgot: {
     fontSize: 12,
-    color: '#555',
   },
   loginButton: {
-    backgroundColor: '#fbbf24',
     paddingVertical: 12,
     alignItems: 'center',
     borderRadius: 6,
@@ -152,7 +158,6 @@ const styles = StyleSheet.create({
   },
   loginText: {
     fontWeight: 'bold',
-    color: '#000',
     fontSize: 16,
   },
   registerRow: {
@@ -160,7 +165,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   registerLink: {
-    color: '#fbbf24',
     fontWeight: 'bold',
   },
 });

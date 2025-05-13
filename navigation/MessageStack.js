@@ -1,15 +1,30 @@
-// Stack cho Chat
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import MessageListScreen from '../screens/Messages/ChatListScreen'; // Sửa đường dẫn
-import ChatScreen from '../screens/Messages/ChatRoomScreen'; // Sửa đường dẫn
+// =========================
+// MessageStack.js
+// Stack điều hướng cho các màn hình nhắn tin (Messages, ChatList, ChatRoom).
+// - Quản lý luồng chuyển đổi giữa danh sách tin nhắn, phòng chat, danh sách chat.
+// - Có thể mở rộng thêm các màn hình nhắn tin khác trong tương lai.
+// =========================
 
-const Stack = createNativeStackNavigator();
+import React from 'react';
+import { createStackNavigator } from '@react-navigation/stack';
+import MessagesScreen from '../screens/Messages/MessagesScreen';
+import ChatRoomScreen from '../screens/Messages/ChatRoomScreen';
+import ChatListScreen from '../screens/Messages/ChatListScreen';
 
-export default function MessageStack() {
+const Stack = createStackNavigator();
+
+const MessageStack = () => {
   return (
-    <Stack.Navigator>
-      <Stack.Screen name="MessageList" component={MessageListScreen} />
-      <Stack.Screen name="ChatRoom" component={ChatScreen} />
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
+      <Stack.Screen name="MessagesMain" component={MessagesScreen} />
+      <Stack.Screen name="ChatList" component={ChatListScreen} />
+      <Stack.Screen name="ChatRoom" component={ChatRoomScreen} />
     </Stack.Navigator>
   );
-}
+};
+
+export default MessageStack;

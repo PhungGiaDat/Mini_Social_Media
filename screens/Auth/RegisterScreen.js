@@ -1,3 +1,11 @@
+// =========================
+// RegisterScreen.js
+// Màn hình đăng ký tài khoản cho ứng dụng mạng xã hội.
+// - Cho phép người dùng nhập thông tin để tạo tài khoản mới.
+// - Điều hướng sang LoginScreen nếu đã có tài khoản.
+// - Khi đăng ký thành công, có thể tự động đăng nhập hoặc chuyển sang màn hình đăng nhập.
+// =========================
+
 import React, { useState } from 'react';
 import {
   View,
@@ -8,32 +16,34 @@ import {
   Image,
   Switch,
 } from 'react-native';
+import { useTheme } from '../../contexts/ThemeContext';
 
 const RegisterScreen = ({ navigation }) => {
   const [isChecked, setIsChecked] = useState(false);
+  const { colors } = useTheme();
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: colors.background }] }>
       <Image source={require('../../assets/favicon.png')} style={styles.logo} />
-      <Text style={styles.title}>Create an account</Text>
-      <TextInput style={styles.input} placeholder="Name" placeholderTextColor="#FBBF24" />
-      <TextInput style={styles.input} placeholder="Email" placeholderTextColor="#FBBF24" />
-      <TextInput style={styles.input} placeholder="Password" placeholderTextColor="#FBBF24" secureTextEntry />
-      <TextInput style={styles.input} placeholder="Confirm Password" placeholderTextColor="#FBBF24" secureTextEntry />
+      <Text style={[styles.title, { color: colors.text }]}>Create an account</Text>
+      <TextInput style={[styles.input, { borderColor: colors.primary, color: colors.text }]} placeholder="Name" placeholderTextColor={colors.secondary} />
+      <TextInput style={[styles.input, { borderColor: colors.primary, color: colors.text }]} placeholder="Email" placeholderTextColor={colors.secondary} />
+      <TextInput style={[styles.input, { borderColor: colors.primary, color: colors.text }]} placeholder="Password" placeholderTextColor={colors.secondary} secureTextEntry />
+      <TextInput style={[styles.input, { borderColor: colors.primary, color: colors.text }]} placeholder="Confirm Password" placeholderTextColor={colors.secondary} secureTextEntry />
       <View style={styles.row}>
-        <Switch value={isChecked} onValueChange={setIsChecked} />
-        <Text style={styles.rememberText}>Remember me</Text>
+        <Switch value={isChecked} onValueChange={setIsChecked} thumbColor={isChecked ? colors.primary : '#ccc'} trackColor={{ false: '#ccc', true: colors.primary }} />
+        <Text style={[styles.rememberText, { color: colors.text }]}>Remember me</Text>
         <TouchableOpacity style={styles.forgot}>
-          <Text style={styles.forgotText}>Forgot password?</Text>
+          <Text style={[styles.forgotText, { color: colors.text }]}>Forgot password?</Text>
         </TouchableOpacity>
       </View>
-      <TouchableOpacity style={styles.button}>
-        <Text style={styles.buttonText}>SIGN UP</Text>
+      <TouchableOpacity style={[styles.button, { backgroundColor: colors.secondary }]}>
+        <Text style={[styles.buttonText, { color: colors.text }]}>SIGN UP</Text>
       </TouchableOpacity>
       <View style={styles.footer}>
-        <Text>Already have an account ? </Text>
+        <Text style={{ color: colors.text }}>Already have an account ? </Text>
         <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-          <Text style={styles.link}>Login Up</Text>
+          <Text style={[styles.link, { color: colors.secondary }]}>Login Up</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -48,7 +58,6 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 30,
     justifyContent: 'center',
-    backgroundColor: '#fff',
   },
   logo: {
     width: 40,
@@ -63,7 +72,6 @@ const styles = StyleSheet.create({
   },
   input: {
     borderBottomWidth: 1,
-    borderColor: '#FBBF24',
     marginBottom: 15,
     paddingVertical: 8,
     fontSize: 16,
@@ -82,10 +90,8 @@ const styles = StyleSheet.create({
   },
   forgotText: {
     fontSize: 12,
-    color: 'gray',
   },
   button: {
-    backgroundColor: '#FBBF24',
     paddingVertical: 12,
     borderRadius: 5,
     marginTop: 10,
@@ -105,7 +111,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   link: {
-    color: '#FBBF24',
     fontWeight: 'bold',
   },
 });

@@ -1,14 +1,21 @@
+// =========================
 // ResetPasswordScreen.js
+// Màn hình đặt lại mật khẩu cho ứng dụng mạng xã hội.
+// - Cho phép người dùng nhập mật khẩu mới sau khi xác thực qua email/token.
+// - Điều hướng trở lại LoginScreen sau khi đặt lại thành công.
+// =========================
 
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { useTheme } from '../../contexts/ThemeContext';
 
 // Bắt đầu component
 const ResetPasswordScreen = () => {
   const navigation = useNavigation();
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const { colors } = useTheme();
 
   const handleReset = () => {
     if (newPassword === confirmPassword) {
@@ -21,34 +28,36 @@ const ResetPasswordScreen = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: colors.background }] }>
       {/* Logo */}
       <Image source={require('../../assets/favicon.png')} style={styles.logo} />
 
       {/* Tiêu đề */}
-      <Text style={styles.title}>Reset Password</Text>
+      <Text style={[styles.title, { color: colors.text }]}>Reset Password</Text>
 
       {/* Ô nhập mật khẩu mới */}
       <TextInput
-        style={styles.input}
+        style={[styles.input, { borderBottomColor: colors.primary, color: colors.text }]}
         placeholder="New Password"
         secureTextEntry
         value={newPassword}
         onChangeText={setNewPassword}
+        placeholderTextColor={colors.secondary}
       />
 
       {/* Ô xác nhận lại mật khẩu */}
       <TextInput
-        style={styles.input}
+        style={[styles.input, { borderBottomColor: colors.primary, color: colors.text }]}
         placeholder="Confirm Password"
         secureTextEntry
         value={confirmPassword}
         onChangeText={setConfirmPassword}
+        placeholderTextColor={colors.secondary}
       />
 
       {/* Nút Reset */}
-      <TouchableOpacity style={styles.button} onPress={handleReset}>
-        <Text style={styles.buttonText}>RESET</Text>
+      <TouchableOpacity style={[styles.button, { backgroundColor: colors.secondary }]} onPress={handleReset}>
+        <Text style={[styles.buttonText, { color: colors.text }]}>RESET</Text>
       </TouchableOpacity>
     </View>
   );
@@ -60,7 +69,6 @@ export default ResetPasswordScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
     padding: 20,
     justifyContent: 'center',
   },
@@ -79,13 +87,11 @@ const styles = StyleSheet.create({
   },
   input: {
     borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
     marginBottom: 30,
     paddingVertical: 8,
     fontSize: 16,
   },
   button: {
-    backgroundColor: '#FDBA12',
     paddingVertical: 15,
     borderRadius: 5,
     marginTop: 10,
@@ -94,6 +100,5 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontWeight: 'bold',
     fontSize: 16,
-    color: '#000',
   },
 });
