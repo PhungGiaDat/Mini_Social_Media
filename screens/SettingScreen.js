@@ -9,8 +9,32 @@ import React from 'react';
 import { View, Text, StyleSheet, Switch } from 'react-native';
 import { useTheme } from '../contexts/ThemeContext';
 
+// Fallback colors and theme functions
+const defaultColors = {
+  background: '#fff',
+  text: '#222',
+  primary: '#0095f6',
+  secondary: '#fbbf24',
+  border: '#eee',
+  card: '#fafafa',
+};
+
 const SettingScreen = () => {
-  const { theme, toggleTheme, colors } = useTheme();
+  // Safely get theme with fallback
+  let theme = 'light';
+  let colors = defaultColors;
+  let toggleTheme = () => console.log('Theme toggle not available');
+  
+  try {
+    const themeContext = useTheme();
+    if (themeContext) {
+      theme = themeContext.theme || 'light';
+      colors = themeContext.colors || defaultColors;
+      toggleTheme = themeContext.toggleTheme || (() => console.log('Theme toggle not available'));
+    }
+  } catch (error) {
+    console.error("Error getting theme in SettingScreen:", error);
+  }
 
   return (
     <View style={[styles.container, { backgroundColor: colors.background }]}> 

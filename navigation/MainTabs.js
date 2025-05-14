@@ -17,6 +17,8 @@ import NotificationScreen from '../screens/Home/NotificationScreen'; // Nếu No
 import ProfileStack from './ProfileStack';
 import MessageStack from './MessageStack';
 import SettingScreen from '../screens/SettingScreen';
+import FirebaseDemoScreen from '../screens/FirebaseDemoScreen';
+
 // Khởi tạo Bottom Tab Navigator
 const Tab = createBottomTabNavigator();
 
@@ -44,12 +46,14 @@ const MainTabs = () => {
             iconName = focused ? 'chatbubble' : 'chatbubble-outline';
           } else if (route.name === 'Settings') {
             iconName = focused ? 'settings' : 'settings-outline';
+          } else if (route.name === 'Firebase') {
+            iconName = focused ? 'flame' : 'flame-outline';
           }
 
           // Trả về icon tương ứng
           return <Ionicons name={iconName} size={size} color={color} />;
         },
-        tabBarActiveTintColor: 'black', // Màu icon khi active
+        tabBarActiveTintColor: '#0095f6', // Using hardcoded value instead of colors.primary
         tabBarInactiveTintColor: 'gray', // Màu icon khi inactive
         headerShown: false, // Ẩn header
       })}
@@ -58,6 +62,7 @@ const MainTabs = () => {
       <Tab.Screen name="Home" component={HomeScreen} />
       <Tab.Screen name="Search" component={SearchScreen} />
       <Tab.Screen name="AddPost" component={PostStack} />
+      <Tab.Screen name="Firebase" component={FirebaseDemoScreen} options={{ title: 'Firebase' }} />
       <Tab.Screen name="Notifications" component={NotificationScreen} />
       <Tab.Screen name="Profile" component={ProfileStack} />
       <Tab.Screen name="Messages" component={MessageStack} />

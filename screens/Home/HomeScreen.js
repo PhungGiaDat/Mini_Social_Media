@@ -11,6 +11,16 @@ import { View, Text, StyleSheet, FlatList, Image, TouchableOpacity, SafeAreaView
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useTheme } from '../../contexts/ThemeContext';
 
+// Fallback colors to prevent errors
+const defaultColors = {
+  background: '#fff',
+  text: '#222',
+  primary: '#0095f6',
+  secondary: '#fbbf24',
+  border: '#eee',
+  card: '#fafafa',
+};
+
 // Dữ liệu mẫu cho story
 const stories = [
   { id: 1, name: 'User1', image: require('../../assets/favicon.png') },
@@ -47,7 +57,17 @@ const posts = [
 
 const HomeScreen = () => {
   const [likedPosts, setLikedPosts] = useState([]);
-  const { colors } = useTheme();
+  
+  // Safely get theme colors with fallback
+  let colors = defaultColors;
+  try {
+    const themeResult = useTheme();
+    if (themeResult && themeResult.colors) {
+      colors = themeResult.colors;
+    }
+  } catch (error) {
+    console.error("Error getting theme in HomeScreen:", error);
+  }
 
   const handleLike = (postId) => {
     setLikedPosts((prev) =>
@@ -206,37 +226,36 @@ const styles = StyleSheet.create({
   },
   userLocation: {
     fontSize: 12,
+    marginTop: 2,
   },
   postImage: {
     width: '100%',
-    height: 320,
-    backgroundColor: '#eee',
+    height: 375,
+    resizeMode: 'cover',
   },
   actionRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingHorizontal: 10,
-    paddingVertical: 8,
+    paddingHorizontal: 12,
+    paddingVertical: 10,
   },
   icon: {
-    marginRight: 14,
+    marginRight: 16,
   },
   likes: {
     fontWeight: 'bold',
-    fontSize: 14,
-    paddingHorizontal: 10,
-    marginBottom: 2,
+    paddingHorizontal: 12,
+    marginBottom: 6,
   },
   caption: {
-    paddingHorizontal: 10,
-    fontSize: 14,
-    marginBottom: 2,
+    paddingHorizontal: 12,
+    marginBottom: 4,
+    lineHeight: 20,
   },
   postDate: {
     fontSize: 12,
-    paddingHorizontal: 10,
-    marginBottom: 6,
+    paddingHorizontal: 12,
+    marginBottom: 10,
   },
 });
 // Trang chủ Feed

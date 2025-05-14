@@ -11,6 +11,16 @@ import { View, Text, StyleSheet, Image, TouchableOpacity, FlatList, Dimensions, 
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useTheme } from '../../contexts/ThemeContext';
 
+// Fallback colors to prevent errors
+const defaultColors = {
+  background: '#fff',
+  text: '#222',
+  primary: '#0095f6',
+  secondary: '#fbbf24',
+  border: '#eee',
+  card: '#fafafa',
+};
+
 const AVATAR = require('../../assets/favicon.png');
 const GRID_SIZE = 3;
 const SCREEN_WIDTH = Dimensions.get('window').width;
@@ -29,7 +39,17 @@ const defaultUser = {
 
 const ProfileScreen = ({ navigation, user = defaultUser, posts = [] }) => {
   const [selectedTab, setSelectedTab] = useState('Posts');
-  const { colors } = useTheme();
+  
+  // Safely get theme colors with fallback
+  let colors = defaultColors;
+  try {
+    const themeResult = useTheme();
+    if (themeResult && themeResult.colors) {
+      colors = themeResult.colors;
+    }
+  } catch (error) {
+    console.error("Error getting theme in ProfileScreen:", error);
+  }
 
   const renderGridItem = ({ item }) => (
     <TouchableOpacity style={styles.gridItem} activeOpacity={0.8}>
@@ -199,6 +219,5 @@ const styles = StyleSheet.create({
   gridImage: {
     width: '100%',
     height: '100%',
-    resizeMode: 'cover',
   },
 });
