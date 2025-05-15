@@ -11,6 +11,16 @@ import { View, Text, StyleSheet, TextInput, FlatList, Image, TouchableOpacity, D
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useTheme } from '../../contexts/ThemeContext';
 
+// Fallback colors to prevent errors
+const defaultColors = {
+  background: '#fff',
+  text: '#222',
+  primary: '#0095f6',
+  secondary: '#fbbf24',
+  border: '#eee',
+  card: '#fafafa',
+};
+
 const GRID_SIZE = 3;
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const IMAGE_SIZE = SCREEN_WIDTH / GRID_SIZE;
@@ -34,7 +44,17 @@ const SearchScreen = ({ navigation }) => {
   const [activeTab, setActiveTab] = useState('users');
   const [users, setUsers] = useState([]);
   const [posts, setPosts] = useState([]);
-  const { colors } = useTheme();
+  
+  // Safely get theme colors with fallback
+  let colors = defaultColors;
+  try {
+    const themeResult = useTheme();
+    if (themeResult && themeResult.colors) {
+      colors = themeResult.colors;
+    }
+  } catch (error) {
+    console.error("Error getting theme in SearchScreen:", error);
+  }
 
   // Mock data for users and posts
   const mockUsers = [

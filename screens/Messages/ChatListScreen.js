@@ -4,6 +4,16 @@ import { useNavigation } from '@react-navigation/native';
 import { useTheme } from '../../contexts/ThemeContext';
 // import { messageApi } from '../../services/api';
 
+// Fallback colors to prevent errors
+const defaultColors = {
+  background: '#fff',
+  text: '#222',
+  primary: '#0095f6',
+  secondary: '#fbbf24',
+  border: '#eee',
+  card: '#fafafa',
+};
+
 // =========================
 // MOCK DATA & CHÚ THÍCH:
 // Đoạn này dùng dữ liệu mẫu để test UI khi chưa có backend/API thực tế.
@@ -21,7 +31,17 @@ const ChatListScreen = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const { colors } = useTheme();
+  
+  // Safely get theme colors with fallback
+  let colors = defaultColors;
+  try {
+    const themeResult = useTheme();
+    if (themeResult && themeResult.colors) {
+      colors = themeResult.colors;
+    }
+  } catch (error) {
+    console.error("Error getting theme in ChatListScreen:", error);
+  }
 
   // =========================
   // Khi mount component, gọi fetchChatList để lấy dữ liệu (mock hoặc API)
@@ -173,13 +193,11 @@ const styles = StyleSheet.create({
     marginRight: 15,
   },
   backButtonText: {
-    color: colors.primary,
     fontSize: 16,
   },
   headerTitle: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: colors.text,
   },
   searchInput: {
     height: 40,
@@ -192,7 +210,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     paddingVertical: 12,
     borderBottomWidth: 1,
-    borderBottomColor: colors.border,
   },
   avatar: {
     width: 48,
@@ -205,26 +222,31 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   name: {
-    fontWeight: '600',
+    fontWeight: 'bold',
     fontSize: 16,
-    color: colors.text,
+    marginBottom: 2,
   },
   message: {
-    color: colors.secondary,
     fontSize: 14,
-    marginTop: 2,
   },
   markButton: {
-    marginLeft: 10,
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 4,
+    borderWidth: 1,
+    marginRight: 8,
   },
   markButtonText: {
-    color: colors.primary,
+    fontSize: 12,
   },
   deleteButton: {
-    marginLeft: 10,
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 4,
+    borderWidth: 1,
   },
   deleteButtonText: {
-    color: 'red',
+    fontSize: 12,
   },
   loadingContainer: {
     flex: 1,
@@ -238,16 +260,15 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   errorText: {
-    color: 'red',
-    marginBottom: 10,
     textAlign: 'center',
+    marginBottom: 20,
   },
   retryButton: {
-    padding: 10,
-    borderRadius: 5,
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    borderRadius: 4,
   },
   retryButtonText: {
-    color: '#fff',
     fontWeight: 'bold',
   },
 });

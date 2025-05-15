@@ -4,6 +4,16 @@ import { useNavigation } from '@react-navigation/native';
 import { useTheme } from '../../contexts/ThemeContext';
 // import { messageApi } from '../../services/api';
 
+// Fallback colors to prevent errors
+const defaultColors = {
+  background: '#fff',
+  text: '#222',
+  primary: '#0095f6',
+  secondary: '#fbbf24',
+  border: '#eee',
+  card: '#fafafa',
+};
+
 // =========================
 // MOCK DATA & CHÚ THÍCH:
 // Đoạn này dùng dữ liệu mẫu để test UI khi chưa có backend/API thực tế.
@@ -21,7 +31,17 @@ const MessagesScreen = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const { colors } = useTheme();
+  
+  // Safely get theme colors with fallback
+  let colors = defaultColors;
+  try {
+    const themeResult = useTheme();
+    if (themeResult && themeResult.colors) {
+      colors = themeResult.colors;
+    }
+  } catch (error) {
+    console.error("Error getting theme in MessagesScreen:", error);
+  }
 
   // =========================
   // Khi mount component, gọi fetchConversations để lấy dữ liệu (mock hoặc API)

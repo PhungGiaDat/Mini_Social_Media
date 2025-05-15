@@ -12,6 +12,16 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import * as ImagePicker from 'expo-image-picker';
 import { useTheme } from '../../contexts/ThemeContext';
 
+// Fallback colors to prevent errors
+const defaultColors = {
+  background: '#fff',
+  text: '#222',
+  primary: '#0095f6',
+  secondary: '#fbbf24',
+  border: '#eee',
+  card: '#fafafa',
+};
+
 const defaultAvatar = require('../../assets/favicon.png');
 
 const EditProfileScreen = ({ navigation }) => {
@@ -20,7 +30,17 @@ const EditProfileScreen = ({ navigation }) => {
   const [name, setName] = useState('Joshua Lee');
   const [username, setUsername] = useState('joshua_l');
   const [bio, setBio] = useState('Travel | Photography | Life\nLove to share my moments!');
-  const { colors } = useTheme();
+  
+  // Safely get theme colors with fallback
+  let colors = defaultColors;
+  try {
+    const themeResult = useTheme();
+    if (themeResult && themeResult.colors) {
+      colors = themeResult.colors;
+    }
+  } catch (error) {
+    console.error("Error getting theme in EditProfileScreen:", error);
+  }
 
   const pickAvatar = async () => {
     const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();

@@ -18,9 +18,29 @@ import {
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useTheme } from '../../contexts/ThemeContext';
 
+// Fallback colors to prevent errors
+const defaultColors = {
+  background: '#fff',
+  text: '#222',
+  primary: '#0095f6',
+  secondary: '#fbbf24',
+  border: '#eee',
+  card: '#fafafa',
+};
+
 const FriendListScreen = ({ navigation, route }) => {
   const { type, title } = route.params;
-  const { colors } = useTheme();
+  
+  // Safely get theme colors with fallback
+  let colors = defaultColors;
+  try {
+    const themeResult = useTheme();
+    if (themeResult && themeResult.colors) {
+      colors = themeResult.colors;
+    }
+  } catch (error) {
+    console.error("Error getting theme in FriendListScreen:", error);
+  }
 
   // Mock data - sẽ được thay thế bằng API call
   const friends = [
